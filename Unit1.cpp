@@ -2,6 +2,7 @@
 
 #include <vcl.h>
 #include <math.h>
+#include <jpeg.hpp>
 #pragma hdrstop
 
 #include "Unit1.h"
@@ -10,7 +11,6 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 int n=0;
-int arr[0]={0};
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
@@ -19,7 +19,8 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-Memo2->Lines->Add("Compiling: Posted new image");
+Image1->Picture->Bitmap=NULL;
+Memo2->Lines->Add("Compiling: Posted new image."+OpenPictureDialog1->Filter);
 if (OpenPictureDialog1->Execute()) {
 Image1->Picture->LoadFromFile(OpenPictureDialog1->FileName);
 }
@@ -28,11 +29,11 @@ Image1->Picture->LoadFromFile(OpenPictureDialog1->FileName);
 void __fastcall TForm1::Image1Click(TObject *Sender)
 {
 
-Memo2->Lines->Add("Compiling: Posted new coordinate");
 TPoint tp;
 GetCursorPos(&tp);
 int x=int(tp.x);
 int y=int(tp.y);
+Memo2->Lines->Add("Compiling: Posted new coordinate : "+IntToStr(x)+" "+IntToStr(y));
 
 if (CheckBox3->Checked==true) {
 	int xc1 = StrToInt(Edit6->Text);
@@ -45,7 +46,6 @@ if (CheckBox2->Checked==false) {
 	Edit3->Text=IntToStr(x-10);
 	Edit4->Text=IntToStr(y-20);
 	CheckBox2->Checked=true;
-	CheckBox3->Checked=true;
 	Button2->Enabled=true;
 }
 }
@@ -55,21 +55,14 @@ if (CheckBox1->Checked==false) {
 	CheckBox1->Checked=true;
 }
 
-/*Memo1->Lines->Add(IntToStr(x-10));
-Memo1->Lines->Add(IntToStr(y-20)); 
-n++;
-arr[n]=x-10;
-n++;
-arr[n]=y-20;
-Memo2->Lines->Add("Добавлена новая строка ..");   */
-
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
 
 Memo2->Lines->Add("Compiling: centering");
-Memo2->Lines->Add("Search: Error(none) - // Ошибок не обнаружено, программа отлажена и готова к дальнейшему использованию.");
+Memo2->Lines->Add("Search: Error(none). Error(102)-none,Error(213)-none,Error(215)-none,Error(404)-none,Error(705)-none. Ok.");
+Memo2->Lines->Add("Go to processing[32.ops/img/elementary_ring_Newton]");
 
 int x1 = StrToInt(Edit1->Text);
 int y1 = StrToInt(Edit2->Text);
@@ -84,6 +77,8 @@ Edit7->Text=IntToStr(q);
 
 int rad=sqrt((r-x1)*(r-x1)+(q-y1)*(q-y1));
 Edit5->Text=IntToStr(rad);
+
+CheckBox3->Checked=true;
 	
 }
 //---------------------------------------------------------------------------
